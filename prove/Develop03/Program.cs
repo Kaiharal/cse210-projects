@@ -7,9 +7,6 @@ class Program
 {
     static void Main()
     {
-        //set up the scripture
-
-
         //explain the program
         Console.WriteLine("Welcome to the Scripture Mastery Program!");
         Console.WriteLine("Please enter the Book of the Scripture you would like to memorize.");
@@ -29,8 +26,7 @@ class Program
         Console.Clear();
         Console.WriteLine("Press Enter to continue, and enter QUIT at any time to exit.");
         Console.WriteLine(reference.GetReference());
-        Console.WriteLine(words);
-        //display full scripture.
+        Console.WriteLine(words);     //display full scripture.
         string choice = "default";
         int totalwords = Quiz.GetWordCount(); //counter too keep track of when you're finished
         while (choice != "QUIT" && totalwords != 0)
@@ -61,6 +57,7 @@ class Program
                             }
                             else
                             {
+                                //replaces hidden words with an equal number of underscores.
                                 int underscores = word.GetWord().Length;
                                 for(int i = 0; i < underscores; i++)
                                 {
