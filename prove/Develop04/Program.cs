@@ -3,31 +3,39 @@ using System.ComponentModel.Design;
 
 class Program
 {
-    
-    static int _countdown = 120; //placeholder variable, test out later
-    private int _requestedDuration; //assigned further down, each loop
-
-    void Main() //menu
+    static void Main() //menu
     {  
         
-        Console.WriteLine("Welcome to the Mindfulness program. Please select one of the following options:");
-        int choice = Menu();
+        Console.WriteLine("Welcome to the Mindfulness program.");
+        int choice = 0;
+        int requestedDuration = 0;
         bool done = false;
         while(!done)
         {
-           switch(choice)
+            choice = Menu();
+            if (choice != 4)
+            {
+                requestedDuration = AskForDuration();
+            }
+            switch(choice)
             {
                 case 1:
-                    //for each case...
-                    //call StartingMessage() with some variable relating to the type of activity
-                    //create a new class object for the activity chosen
-                    //call the activity method
+                    Breathing activity_01 = new Breathing();
+                    StartingMessage(activity_01.Title(), activity_01.Description()); //this needs to take input!
+                    Task.WaitAll(activity_01.Start(requestedDuration));
+                    EndingMessage(activity_01.Title());
                     break;
                 case 2:
-                    //do reflection
+                    Reflection activity_02 = new Reflection();
+                    StartingMessage(activity_02.Title(), activity_02.Description());
+                    activity_02.Start(requestedDuration);                    
+                    EndingMessage(activity_02.Title());
                     break;
                 case 3:
-                    //do listing
+                    Listing activity_03 = new Listing();
+                    StartingMessage(activity_03.Title(), activity_03.Description());
+                    activity_03.Start(requestedDuration);
+                    EndingMessage(activity_03.Title());
                     break;
                 case 4:
                     Console.WriteLine("Thank you for using the program!");
@@ -42,42 +50,65 @@ class Program
     static int Menu()
     {
         int choice = 0;
+        Console.WriteLine("Please select one of the following options:");
         Console.WriteLine("1: Breathing Activity");
         Console.WriteLine("2: Reflection Activity");
         Console.WriteLine("3: Listing Activity");
         Console.WriteLine("4: Quit");
 
-        while(choice == 0)
+        while(choice <= 0 || choice > 4)
         {
             try
             {
-             choice = int.Parse(Console.ReadLine());
+                choice = int.Parse(Console.ReadLine());
+                if (choice <= 0 || choice > 4)
+                {
+                    Console.WriteLine("Invalid input. Please enter a number between 1 and 4.");
+                }
             }
             catch (FormatException)
             {
                 Console.WriteLine("Invalid input. Please enter a number between 1 and 4.");
             }
-        }
 
+        }
 
         return choice;
     }
 
-    static void StartingMessage()
+    static int AskForDuration()
     {
-        // this should adjust to introduce each type of activity, 
-        //and also prompt for the duration of any activity.
-
+        Console.WriteLine("How long would you like this activity to last (in seconds)?");
+        int duration = 0;
+        while (duration <= 0)
+        {
+            try
+            {
+                duration = int.Parse(Console.ReadLine());
+                if (duration <= 0)
+                {
+                    Console.WriteLine("Invalid input. Please enter a number greater than 0.");
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid input. Please enter a number.");
+            }  
+        }
+        return duration;
     }
-    static void EndingMessage()
+
+    static void StartingMessage(string activity, string description)
     {
-        //pretty straightforward.
+        Console.Clear();
+        Console.WriteLine($"This is the {activity} activity.\n{description}");
+        Thread.Sleep(200);
     }
-
-    static void Spinner()
+    static void EndingMessage(string title)
     {
-
+        Console.WriteLine($"Thank you for trying the {title} activity.\n\n");
+        Thread.Sleep(300);
     }
 
-
+    
 }
