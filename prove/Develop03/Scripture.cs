@@ -1,12 +1,36 @@
+using System;
+
+class Scripture
 {
-    static void AddScripture()
+    private List<Word> _words;
+    private Reference _references;
+
+    public Scripture(string book, string chapter, string startVerse, string endVerse, string words)
     {
-        //list of scriptures, list of references (?)
-        //probably have a base scripture for testing and ease of use
+        //initialize classes
+        this._references = new Reference(book, chapter, startVerse, endVerse);
+        this._words = new List<Word>();
+        //Create a list of Word objects from the given string
+        string[] wordsList = words.Split(' ');
+        foreach (string text in wordsList)
+        {
+            this._words.Add(new Word(text));
+        }
     }
 
-    static void ChooseScripture()
+    public int GetWordCount()
     {
-        //choose a scripture by entering it's reference? maybe?
+        int count = _words.Count;
+        return count;
+    }
+
+    public List<Word> GetWords()
+    {
+        return _words;
+    }
+
+    public Reference GetReference()
+    {
+        return _references;
     }
 }
