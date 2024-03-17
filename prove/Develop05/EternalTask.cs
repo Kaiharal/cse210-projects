@@ -2,18 +2,19 @@ class EternalTask : Objective
 {
     private int _timesCompleted;
 
-    public EternalTask(string name, string description, bool status, int points) : base(name, description, status, points)
+    public EternalTask(string name, string description, bool status, int points, int timesCompleted) : base(name, description, status, points)
     {
-        _timesCompleted = 0;
+        _timesCompleted = timesCompleted;
+    }
 
-        public override int completeTask()
-        {
+    public override int completeTask()
+    {
+        _timesCompleted++;
+        return _points;
+    }
 
-        }
-
-        public int getTimesCompleted()
-        {
-            return _timesCompleted;
-        }
+    public int getTimesCompleted()
+    {            
+        return _timesCompleted;
     }
 }

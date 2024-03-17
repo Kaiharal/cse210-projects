@@ -1,9 +1,9 @@
-class Objective
+abstract class Objective
 {
     private string _name;
     private string _description;
-    private bool _status;
-    private int _points;
+    protected bool _status;
+    protected int _points;
 
     public Objective(string name, string description, bool status, int points)
     {
@@ -11,6 +11,7 @@ class Objective
         _description = description;
         _status = status;
         _points = points;
+
     }
 
     public string getName()
@@ -29,4 +30,9 @@ class Objective
     }
 
     public abstract int completeTask();
+
+    public bool getStatus()
+    {
+        return _status;
+    }
 }
